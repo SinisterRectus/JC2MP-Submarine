@@ -25,7 +25,7 @@ function Submarine:__init()
 	Events:Subscribe("LocalPlayerEjectVehicle", self, self.BlockEject)
 	Events:Subscribe("EntityDespawn", self, self.Despawn)
 	Events:Subscribe("ModulesLoad", self, self.AddHelp)
-	Events:Subscribe("ModuleUnLoad", self, self.RemoveHelp)
+	Events:Subscribe("ModuleUnload", self, self.RemoveHelp)
 	
 end
 
