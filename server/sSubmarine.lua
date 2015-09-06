@@ -10,8 +10,8 @@ function Submarine:Create(args, max_accel, max_speed)
 
 	local vehicle = Vehicle.Create(args)
 	
-	vehicle:SetNetworkValue("max_accel", max_accel or 5)
-	vehicle:SetNetworkValue("max_speed", max_speed or 35) 
+	vehicle:SetNetworkValue("max_accel", math.max(max_accel or 5, 1))
+	vehicle:SetNetworkValue("max_speed", math.max(max_speed or 35, 5)) 
 	-- May not always match actual max speed, depending upon acceleration and drag
 	
 	return vehicle
