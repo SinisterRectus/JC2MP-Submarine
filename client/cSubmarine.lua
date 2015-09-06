@@ -24,6 +24,8 @@ function Submarine:__init()
 	Events:Subscribe("LocalPlayerExitVehicle", self, self.Exit)
 	Events:Subscribe("LocalPlayerEjectVehicle", self, self.BlockEject)
 	Events:Subscribe("EntityDespawn", self, self.Despawn)
+	Events:Subscribe("ModulesLoad", self, self.AddHelp)
+	Events:Subscribe("ModuleUnLoad", self, self.RemoveHelp)
 	
 end
 
@@ -130,6 +132,29 @@ function Submarine:Despawn(args)
 		end
 	end
 		
+end
+
+function Submarine:AddHelp()
+
+    Events:Fire("HelpAddItem",
+        {
+            name = "Submarine",
+            text = 
+                "This allows you to spawn a submersible MTA Powerrun 77." .. 
+				"\n\nEnter /sub [max accel] [max speed] to spawn a submarine," ..
+                "\nwhere max accel and max speed are numbers. If these are" ..
+				"\nomited, the defaults are 5 and 35 m/s, respectively."
+        })
+
+end
+
+function Submarine:RemoveHelp()
+
+    Events:Fire("HelpRemoveItem",
+        {
+            name = "Submarine"
+        })
+
 end
 
 Submarine = Submarine()
