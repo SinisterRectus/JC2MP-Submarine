@@ -143,7 +143,8 @@ function Submarine:AddHelp()
                 "This allows you to spawn a submersible MTA Powerrun 77." .. 
 				"\n\nEnter /sub [max accel] [max speed] to spawn a submarine," ..
                 "\nwhere max accel and max speed are numbers. If these are" ..
-				"\nomited, the defaults are 5 and 35 m/s, respectively."
+				"\nomited, the defaults are 5 and 35 m/s, respectively." ..
+				"\n\nPress Ctrl to dive and Shift to surface."
         })
 
 end
