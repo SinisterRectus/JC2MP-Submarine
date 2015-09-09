@@ -54,27 +54,29 @@ function Submarine:Control(args)
 	
 	self.altitude = math.clamp(self.altitude, math.ceil(Physics:GetTerrainHeight(position)), self.sea_level)
 	
+	local accel, yaw
+	
 	if Input:GetValue(Action.Accelerate) > 0 then
-		self.accel = self.vehicle:GetValue("max_accel") - (self.vehicle:GetValue("max_accel") / self.vehicle:GetValue("max_speed")^2) * speed^2
+		accel = self.vehicle:GetValue("max_accel") - (self.vehicle:GetValue("max_accel") / self.vehicle:GetValue("max_speed")^2) * speed^2
 	elseif Input:GetValue(Action.Reverse) > 0 then
-		self.accel = -0.1 * (self.vehicle:GetValue("max_accel") - (self.vehicle:GetValue("max_accel") / self.vehicle:GetValue("max_speed")^2) * speed^2)
+		accel = -0.1 * (self.vehicle:GetValue("max_accel") - (self.vehicle:GetValue("max_accel") / self.vehicle:GetValue("max_speed")^2) * speed^2)
 	else	
-		self.accel = 0
+		accel = 0
 	end
 	
 	if Input:GetValue(Action.TurnLeft) > 0 then
-		self.yaw = 1
+		yaw = 1
 	elseif Input:GetValue(Action.TurnRight) > 0 then
-		self.yaw = -1
+		yaw = -1
 	else
-		self.yaw = 0
+		yaw = 0
 	end
 
 	if self.altitude < self.sea_level or position.y < self.sea_level then
 	
-		self.vehicle:SetLinearVelocity(velocity + angle * Vector3(0, self.altitude_gain * (self.altitude - position.y), -self.accel) * args.delta)
+		self.vehicle:SetLinearVelocity(velocity + angle * Vector3(0, self.altitude_gain * (self.altitude - position.y), -accel) * args.delta)
 	
-		self.vehicle:SetAngularVelocity(angle * Vector3(self.pitch_gain * -angle.pitch, math.abs(speed)/speed * self.yaw_gain * self.yaw, -self.roll_gain * angle.roll))
+		self.vehicle:SetAngularVelocity(angle * Vector3(self.pitch_gain * -angle.pitch, math.abs(speed)/speed * self.yaw_gain * yaw, -self.roll_gain * angle.roll))
 	
 		LocalPlayer:SetOxygen(1)
 		
@@ -82,9 +84,9 @@ function Submarine:Control(args)
 		
 	elseif position.y < self.sea_level + 1 then
 	
-		self.vehicle:SetLinearVelocity(velocity + angle * Vector3(0, 0, -self.accel) * args.delta)
+		self.vehicle:SetLinearVelocity(velocity + angle * Vector3(0, 0, -accel) * args.delta)
 		
-		self.vehicle:SetAngularVelocity(angle * Vector3(self.vehicle:GetAngularVelocity().x, math.abs(speed)/speed * self.yaw_gain * self.yaw, self.vehicle:GetAngularVelocity().z))
+		self.vehicle:SetAngularVelocity(angle * Vector3(self.vehicle:GetAngularVelocity().x, math.abs(speed)/speed * self.yaw_gain * yaw, self.vehicle:GetAngularVelocity().z))
 		
 		-- Chat:Print("on water", Color.Red)
 		
