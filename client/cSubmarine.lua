@@ -13,7 +13,7 @@ function Submarine:__init()
 
 	if LocalPlayer:InVehicle() then
 		local vehicle = LocalPlayer:GetVehicle()
-		if vehicle:GetModelId() == 88 and vehicle:GetDriver() == LocalPlayer then
+		if vehicle:GetModelId() == 88 then
 			self.vehicle = vehicle
 			self.altitude = self.sea_level
 			self.sub = Events:Subscribe("PreTick", self, self.Control)
@@ -102,7 +102,7 @@ end
 
 function Submarine:Enter(args)
 
-	if args.vehicle:GetModelId() == 88 and args.vehicle:GetDriver() == LocalPlayer and args.vehicle:GetValue("max_speed") and args.vehicle:GetValue("max_accel") then
+	if args.vehicle:GetModelId() == 88 and args.vehicle:GetValue("max_speed") and args.vehicle:GetValue("max_accel") then
 		self.vehicle = args.vehicle
 		self.altitude = self.sea_level
 		if not self.sub then
