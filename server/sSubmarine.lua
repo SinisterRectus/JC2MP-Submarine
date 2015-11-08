@@ -12,7 +12,10 @@ end
 function Submarine:Create(args, max_accel, max_speed, creator)
 
 	local id = creator:GetId()
-	if IsValid(self.vehicles[id]) then self.vehicles[id]:Remove() end
+	if IsValid(self.vehicles[id]) then
+		self.vehicles[id]:Remove()
+		self.vehicles[id] = nil
+	end
 
 	local vehicle = Vehicle.Create(args)
 	
@@ -49,7 +52,10 @@ end
 function Submarine:OnPlayerQuit(args)
 
 	local id = args.player:GetId()
-	if IsValid(self.vehicles[id]) then self.vehicles[id]:Remove() end
+	if IsValid(self.vehicles[id]) then
+		self.vehicles[id]:Remove()
+		self.vehicles[id] = nil
+	end
 
 end
 
